@@ -1,0 +1,11 @@
+<div>
+    <ul>
+        <% JSON.parse(users).forEach(function(user) { %>
+            <li>
+                <img src="<%= user.picture %>" class="avatar" />
+                <span class="fi fi-<%=user.locale %>"></span>
+                <%= user.name %>
+            </li>
+            <% }) %>
+    </ul>
+</div>
