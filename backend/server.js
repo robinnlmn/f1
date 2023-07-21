@@ -27,6 +27,10 @@ app.use('/admin', admin)
 var pages = require('./routes/pages/pages.js')
 app.use('/', pages)
 
+var admin = require('./routes/admin/admin.js')
+app.use('/admin', admin)
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

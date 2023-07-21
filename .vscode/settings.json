@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "DAWDAD",
+            "database": "${workspaceFolder:f1}/backend/database.db"
+        }
+    ]
+}

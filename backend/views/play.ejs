@@ -1,0 +1,40 @@
+<div>
+    <div class="play-container">
+        <% JSON.parse(games).forEach(function(game) { %>
+            <div class="play-game">
+                <p class="play-title">
+                    <span class="fi fi-<%=game.country %>"></span>
+                    <%= game.name%>
+                </p>
+                <a class="play-guess" style="color: #333333; text-decoration: none" href="/guess/<%= game.id%>" >
+                    <span class="material-symbols-outlined" style="color: #333333;">
+                        ballot
+                    </span>
+                    GUESS
+                </a>
+                <a class="play-seeguess" style="color: white; text-decoration: none" href="/guess/more/<%= game.id%>" >
+                    <span class="material-symbols-outlined" style="color: white;">
+                        manage_search
+                    </span>
+                    SEE GUESSES
+                </a>
+                <p>
+                    <% 
+                        const gameEnds=new Date(game.ends); 
+                        const days=["Sun", "Mon" , "Tue" , "Wed" , "Thu" , "Fri" , "Sat"]; 
+                        const months=["Jan", "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct", "Nov" , "Dec" ]; 
+                        const dayName=days[gameEnds.getDay()]; 
+                        const dayOfMonth=gameEnds.getDate(); 
+                        const monthName=months[gameEnds.getMonth()]; 
+                        const timeOfDay=gameEnds.toLocaleTimeString([], { hour: '2-digit' , minute: '2-digit' }); 
+                    %>
+                    
+                    <p>
+                        Ends
+                        <%= `${dayName} ${dayOfMonth} ${monthName} ${timeOfDay}` %>
+                    </p>
+                </p>
+            </div>
+        <% }) %>
+    </div>
+</div>

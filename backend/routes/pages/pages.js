@@ -12,7 +12,6 @@ app.use(expressLayouts)
 /* SQL FILES*/
 
 const createUser = fs.readFileSync(path.join(__dirname, '../../sql/create-user.sql')).toString()
-console.log(createUser)
 
 /* SQL FILES*/
 
@@ -42,13 +41,18 @@ app.get('/', (req, res) => {
 /* LEADERBOARD PAGE */
 app.get('/leaderboard', (req, res) => {
     db.all('SELECT * FROM users', [], (err, rows) => {
-        res.render('leaderboard', { title: 'Leaderboard', user: JSON.stringify(req.oidc.user), users: JSON.stringify(rows) })
+        db.get(`SELECT * FROM users WHERE name = "${req.oidc.user.name}"`, (err, row) => {
+            res.render('leaderboard', { title: 'Leaderboard', user: JSON.stringify(row), users: JSON.stringify(rows) })
+        })
     })
 })
 
-app.get('/users', (req, res) => {
-    db.all('SELECT * FROM users', [], (err, rows) => {
-        res.render('users', { title: 'Users', user: JSON.stringify(req.oidc.user), users: JSON.stringify(rows) })
+app.get('/play', (req, res) => {
+    db.all('SELECT * FROM games WHERE date = date()', [], (err, rows) => {
+        console.log(rows)
+        db.get(`SELECT * FROM users WHERE name = "${req.oidc.user.name}"`, (err, row) => {
+            res.render('play', { title: 'Leaderboard', user: JSON.stringify(row), games: JSON.stringify(rows) })
+        })
     })
 })
 

@@ -1,11 +1,79 @@
-<div>
-    <ul>
-        <% JSON.parse(users).forEach(function(user) { %>
-            <li>
-                <img src="<%= user.picture %>" class="avatar" />
-                <span class="fi fi-<%=user.locale %>"></span>
-                <%= user.name %>
-            </li>
-            <% }) %>
-    </ul>
+<div class="site">
+  <div class="filter">
+    <input type="text" placeholder="name" class="filter-name" />
+    <input type="text" placeholder="nationality" class="filter-locale" />
+  </div>
+
+  <ul style="list-style-type: none" class="ld-list">
+    <% JSON.parse(users).forEach(function(user) { %>
+    <li class="user-ld">
+      <img src="<%= user.picture %>" class="avatar-ld" />
+      <p>
+        <span class="fi fi-<%=user.locale %>"></span>
+        <%= user.name %>
+      </p>
+      <p><%= user.points %></p>
+    </li>
+    <% }) %>
+  </ul>
 </div>
+
+<style>
+  .filter {
+    margin: 25px;
+    background-color: #191919;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  .filter-name {
+    background-color: transparent;
+    border: 2px solid #0e0e0e;
+    padding: 7.5px;
+    margin-left: 7.5px;
+    border-radius: 7.5px;
+    font-weight: 700;
+    font-size: 20px;
+    width: 25%;
+  }
+
+  .filter-locale {
+    background-color: transparent;
+    border: 2px solid #0e0e0e;
+    padding: 7.5px;
+    margin-left: 7.5px;
+    border-radius: 7.5px;
+    font-weight: 700;
+    font-size: 20px;
+    width: 12.5%;
+  }
+
+  .ld-list {
+    padding: 25px;
+  }
+
+  .user-ld {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #191919;
+    padding: 10px;
+    width: 300px;
+    border-radius: 10px;
+    transition: 250ms;
+  }
+
+  .user-ld:hover {
+    background-color: #1f1f1f;
+    transform: scale(1.015);
+    transition: 250ms;
+  }
+
+  .avatar-ld {
+    aspect-ratio: 1/1;
+    height: 42.5px;
+    border-radius: 50%;
+  }
+</style>
