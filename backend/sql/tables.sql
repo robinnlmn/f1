@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS games (
 CREATE TABLE IF NOT EXISTS guess (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game INTEGER NOT NULL,
-    user INTEGER NOT NULL UNIQUE,
+    user INTEGER NOT NULL,
     "1" TEXT NOT NULL,
     "2" TEXT NOT NULL,
     "3" TEXT NOT NULL,
@@ -48,9 +48,11 @@ CREATE TABLE IF NOT EXISTS guess (
     "18" TEXT NOT NULL,
     "19" TEXT NOT NULL,
     "20" TEXT NOT NULL,
-    fastest_lap TEXT NOT NULL,
+    "fastest_lap" TEXT NOT NULL,
     
     -- Add UNIQUE constraint and FOREIGN KEY constraints if they do not exist
     FOREIGN KEY(game) REFERENCES games(id),
     FOREIGN KEY(user) REFERENCES users(id)
 );
+
+INSERT INTO guess (user) VALUES (2)

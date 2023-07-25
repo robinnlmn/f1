@@ -1,11 +1,44 @@
 <div>
-  <div class="guess-container">
-    <% JSON.parse(drivers).forEach(function(driver) { %>
-    <p class="guess-draggable" draggable="true">
-      <span class="fi fi-<%=driver.nationality%>"></span><%= driver.name %>
-    </p>
-    <% }) %>
+  <div class="guess-container-whole">
+    <div class="guess-numbers">
+      <p>1.</p>
+      <p>2.</p>
+      <p>3.</p>
+      <p>4.</p>
+      <p>5.</p>
+      <p>6.</p>
+      <p>7.</p>
+      <p>8.</p>
+      <p>9.</p>
+      <p>10.</p>
+      <p>11.</p>
+      <p>12.</p>
+      <p>13.</p>
+      <p>14.</p>
+      <p>15.</p>
+      <p>16.</p>
+      <p>17.</p>
+      <p>18.</p>
+      <p>19.</p>
+      <p>20.</p>
+    </div>
+    <div class="guess-container">
+      <% JSON.parse(drivers).forEach(function(driver) { %>
+      <p class="guess-draggable" draggable="true">
+        <span class="guess-driver-details">
+          <!-- <span class="fi fi-<%=driver.nationality%> margin-r10"></span> -->
+          <img
+            src="/images/teams/<%= driver.team %>.png"
+            class="guess-driver-img"
+          />
+          <%=driver.name%>
+        </span>
+        <input type="radio" name="fastestlap" class="guess-radio" />
+      </p>
+      <% }) %>
+    </div>
   </div>
+  <button onclick="submitguess()">SUBMIT</button>
 </div>
 
 <script>
@@ -54,5 +87,47 @@
         offset: Number.NEGATIVE_INFINITY,
       }
     ).element;
+  }
+
+  function submitguess() {
+    var guess = [];
+    var fastestlap;
+
+    for (const child of container.children) {
+      guess.push(child.innerText);
+      if (child.children[1].checked) {
+        fastestlap = child.innerText;
+      }
+    }
+
+    if (fastestlap == undefined) {
+      return alert(
+        "Please select the driver you think will drive the fastest lap!"
+      );
+    }
+
+    sendGuess(guess, fastestlap);
+    // make a fetch call to localhost:8080/guess
+  }
+
+  function sendGuess(guess, fastestlap) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("guess", JSON.stringify(guess));
+    urlencoded.append("fastestlap", fastestlap);
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+    fetch(
+      "http://localhost:8080/guess/<%= JSON.parse(game).id %>",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   }
 </script>

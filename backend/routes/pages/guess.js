@@ -126,4 +126,46 @@ app.get("/:id", (req, res) => {
   });
 });
 
+app.post("/:id", (req, res) => {
+  console.log(JSON.parse(req.body.guess));
+  db.get(
+    `SELECT id FROM users WHERE name = "${req.oidc.user.name}"`,
+    [],
+    (err, id) => {
+      if (err) return console.error(err) && res.send(err);
+      db.run(
+        "INSERT INTO guess (game, user, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', fastest_lap)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [
+          req.params.id,
+          id.id,
+          JSON.parse(req.body.guess)[0],
+          JSON.parse(req.body.guess)[1],
+          JSON.parse(req.body.guess)[2],
+          JSON.parse(req.body.guess)[3],
+          JSON.parse(req.body.guess)[4],
+          JSON.parse(req.body.guess)[5],
+          JSON.parse(req.body.guess)[6],
+          JSON.parse(req.body.guess)[7],
+          JSON.parse(req.body.guess)[8],
+          JSON.parse(req.body.guess)[9],
+          JSON.parse(req.body.guess)[10],
+          JSON.parse(req.body.guess)[11],
+          JSON.parse(req.body.guess)[12],
+          JSON.parse(req.body.guess)[13],
+          JSON.parse(req.body.guess)[14],
+          JSON.parse(req.body.guess)[15],
+          JSON.parse(req.body.guess)[16],
+          JSON.parse(req.body.guess)[17],
+          JSON.parse(req.body.guess)[18],
+          JSON.parse(req.body.guess)[19],
+          req.body.fastestlap,
+        ],
+        (err, row) => {
+          if (err) return console.error(err) && res.send(err);
+        }
+      );
+    }
+  );
+});
+
 module.exports = app;
